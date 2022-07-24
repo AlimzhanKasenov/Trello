@@ -1,0 +1,78 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/MainLayout}">
+
+<div layout:fragment="mainContent" class="m-4">
+    <div class="card w-100 my-3 row " style="width: 18rem;" th:if="${folderrr != null}">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${folderrr.name}"></h5>
+            <div class="bd-example" >
+                <button th:each="fol : ${folderrr.categories}" type="button" class="btn btn-primary btn-sm m-1" th:text="${fol.name}"></button>
+                <b><button type="button" class="bg-white border-0 mx-2" data-bs-toggle="modal" data-bs-target="#modal">
+                    + Add category
+                </button></b>
+            </div>
+        </div>
+    <div>
+        <b><button type="button" class="bg-white border-0 mx-2" data-bs-toggle="modal" data-bs-target="#modal">
+            + New task
+        </button></b>
+    </div>
+
+    <div>
+        <table class="table caption-top">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">TASK NAME</th>
+                <th scope="col">Status</th>
+                <th scope="col">Details</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr th:each="task : ${task}">
+                <th scope="row" th:text="${task.id}"></th>
+                <td th:text="${task.description}"></td>
+
+                <td th:switch="${task.status}">
+                    <span th:case="0" class="text-warning font-weight-bold">TO DO</span>
+                    <span th:case="1" class="text-danger font-weight-bold">INTEST</span>
+                    <span th:case="2" class="text-primary font-weight-bold">DONE</span>
+                    <span th:case="3" class="text-success font-weight-bold">FAILED</span>
+                </td>
+                <td><button class="btn-danger">Details</button></td>
+            </tr>
+            </span>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" id="modal" tabindex="-1">
+        <form action="/addCategory" method="post">
+            <input type="hidden" name="id" th:value="${folderrr}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">ASSIGN CATEGORY</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Category name:</p>
+                        <select class="form-select" id="input">
+                            <option th:value="0">TO DO</option>
+                            <option th:value="1">INTEST</option>
+                            <option th:value="2">DONE</option>
+                            <option th:value="3">FAILED</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+</html>

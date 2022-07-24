@@ -1,0 +1,38 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/MainLayout}">
+<div layout:fragment="mainContent" class="m-4">
+    <b><button type="button" class="bg-white border-0 mx-2" data-bs-toggle="modal" data-bs-target="#modal">
+        + Add folder
+    </button></b>
+    <div class="card w-100 my-3 row " style="width: 18rem;" th:each="nameFolder : ${folders}">
+        <input type="hidden" th:value="${nameFolder.id}">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${nameFolder.name}"></h5>
+            <a th:href="@{'/details/' + ${nameFolder.id}}" class="btn btn-primary">Details</a>
+        </div>
+    </div>
+
+
+<div class="modal" id="modal" tabindex="-1">
+    <form action="/addFolder" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add new folder</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Folder name:</p>
+                    <input type="text" class="form-control" name="name" placeholder="Name">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add folder</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</html>
