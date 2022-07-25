@@ -29,6 +29,9 @@ public class ServicFoldersImp implements ServicFolders {
     @Autowired
     ReposTasks reposTasks;
 
+    @Autowired
+    ServicTaskCategories servicTaskCategories;
+
     @Override
     public List<Folders> getAllFolders(){
         return reposFolders.findAll();
@@ -43,7 +46,7 @@ public class ServicFoldersImp implements ServicFolders {
     @Override
     public Folders addCategoryToFolder(Long folderId, Long categoryId) {
         Folders folder = reposFolders.findById(folderId).orElse(null);
-        TaskCategories category = ServicTaskCategories.getCategoryById(categoryId);
+        TaskCategories category = servicTaskCategories.getCategoryById(categoryId);
         if(folder!=null && category!=null){
             List<TaskCategories> categories = folder.getCategories();
             if(categories==null){

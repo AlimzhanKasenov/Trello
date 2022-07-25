@@ -48,8 +48,8 @@
     </div>
 
     <div class="modal" id="modal" tabindex="-1">
-        <form action="/addCategory" method="post">
-            <input type="hidden" name="id" th:value="${folderrr}">
+        <form th:action="@{'/addCategory'}" method="post">
+            <input type="hidden" name="id" th:value="${folderrr.id}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -58,11 +58,13 @@
                     </div>
                     <div class="modal-body">
                         <p>Category name:</p>
-                        <select class="form-select" id="input">
-                            <option th:value="0">TO DO</option>
-                            <option th:value="1">INTEST</option>
-                            <option th:value="2">DONE</option>
-                            <option th:value="3">FAILED</option>
+                        <select class="form-select" name="input">
+                            <option th:value="1">Первая котегория</option>
+                            <option th:value="2">Вторая котегория</option>
+                            <option th:value="3">Третья котегория</option>
+                            <option th:value="4">Четвёртая котегория</option>
+                            <option th:value="5">Пятая котегория</option>
+                            <option th:value="6">Шестая котегория</option>
                         </select>
                     </div>
                     <div class="modal-footer">

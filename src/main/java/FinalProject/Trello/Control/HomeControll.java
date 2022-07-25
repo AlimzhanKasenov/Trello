@@ -5,13 +5,7 @@ import FinalProject.Trello.Servis.ServicFolders;
 import FinalProject.Trello.Servis.ServicTaskCategories;
 import FinalProject.Trello.Servis.ServicTasks;
 import FinalProject.Trello.model.Folders;
-import FinalProject.Trello.model.TaskCategories;
 import FinalProject.Trello.model.Tasks;
-import FinalProject.Trello.repository.ReposComments;
-import FinalProject.Trello.repository.ReposFolders;
-import FinalProject.Trello.repository.ReposTaskCategories;
-import FinalProject.Trello.repository.ReposTasks;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class HomeControll{
@@ -64,11 +57,11 @@ public class HomeControll{
 
     @PostMapping(value = "/addCategory")
     public String addCategory(@RequestParam(name = "id") Long folder_id,
-                            @RequestParam(name = "input") Long category_id) {
+                              @RequestParam(name = "input") Long category_id) {
         Folders folders = servicFolders.addCategoryToFolder(folder_id, category_id);
         if (folders!=null){
             servicFolders.addNewFolder(folders);
-            return "redirect:/details/"+folders.getId();
+            return "redirect:/details/" + folder_id;
         }
         return null;
     }
