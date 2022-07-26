@@ -5,6 +5,7 @@ import FinalProject.Trello.Servis.ServicFolders;
 import FinalProject.Trello.Servis.ServicTaskCategories;
 import FinalProject.Trello.Servis.ServicTasks;
 import FinalProject.Trello.model.Folders;
+import FinalProject.Trello.model.TaskCategories;
 import FinalProject.Trello.model.Tasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,10 @@ public class HomeControll{
     @GetMapping(value = "/details/{id}")
     public String details(@PathVariable(name = "id") Long id, Model model){
         Folders folders = servicFolders.getById(id);
+        List<TaskCategories> categories = servicFolders.getFolder(id).getCategories();
         List<Tasks> list = servicTasks.findAllByFolder(folders);
         model.addAttribute("folderrr", folders);
+        model.addAttribute("categories", categories);
         model.addAttribute("task", list);
         return "/DetailsPage";
     }
@@ -64,5 +67,12 @@ public class HomeControll{
             return "redirect:/details/" + folder_id;
         }
         return null;
+    }
+
+    @PostMapping(value = "/deletCategory")
+    public String deletCategory(@RequestParam(name = "folder_id") Long folder_id,
+                              @RequestParam(name = "category_id") Long category_id) {
+        Folders folders = servicFolders.deleteCategoryToFolder(folder_id, category_id);
+            return "redirect:/details/" + folders.getId();
     }
 }

@@ -6,11 +6,26 @@
     <div class="card w-100 my-3 row " style="width: 18rem;" th:if="${folderrr != null}">
         <div class="card-body">
             <h5 class="card-title" th:text="${folderrr.name}"></h5>
-            <div class="bd-example" >
-                <button th:each="fol : ${folderrr.categories}" type="button" class="btn btn-primary btn-sm m-1" th:text="${fol.name}"></button>
-                <b><button type="button" class="bg-white border-0 mx-2" data-bs-toggle="modal" data-bs-target="#modal">
-                    + Add category
-                </button></b>
+            <div class="col-2 mt-3" th:each="category:${categories}" style="display: flex">
+                <div  class="me-3 text-light" style="display: flex; max-height:100px" >
+                    <button style="height: 100% ;border-bottom-right-radius: 0; border-top-right-radius: 0; "
+                            class="text-light btn bg-success btn-sm"><span  th:text="${category.name}"></span></button>
+                    <form th:action="@{'/deletCategory'}" method="post">
+                        <button style="border-bottom-left-radius: 0; height: 100%; border-top-left-radius: 0;"
+                                type="submit" class="btn btn-success btn-sm">×</button>
+                        <input th:value="${folderrr.id}" hidden th:name="folder_id">
+                        <input th:value="${category.id}" hidden th:name="category_id">
+                    </form>
+                </div>
+            </div>
+
+                    <b><button type="button" class="bg-white border-0 mx-2" data-bs-toggle="modal"
+                               data-bs-target="#modal">
+                        + Add category
+                    </button></b>
+                </form>
+
+
             </div>
         </div>
     <div>
@@ -66,6 +81,27 @@
                             <option th:value="5">Пятая котегория</option>
                             <option th:value="6">Шестая котегория</option>
                         </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="modal2" tabindex="-1">
+        <form th:action="@{'/deletCategory'}" method="post">
+            <input type="hidden" name="id" th:value="${folderrr.id}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">REMOVE CATEGORY</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to remove category</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

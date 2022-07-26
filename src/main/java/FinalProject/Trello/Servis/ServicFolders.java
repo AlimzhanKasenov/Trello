@@ -10,4 +10,6 @@ public interface ServicFolders {
     Folders getById(Long id);
     public Folders addNewFolder(Folders folder);
     public Folders addCategoryToFolder(Long folder, Long category);
+    Folders deleteCategoryToFolder(Long folder, Long category);
+    Folders getFolder(Long id);
 }

@@ -27,4 +27,9 @@ public class ServicTaskCategoriesImp implements ServicTaskCategories {
     @Override
     public TaskCategories getCategoryById(Long id){return reposTaskCategories.findById(id).orElse(null);}
 
+    @Override
+    public void deleteById(Long id) {
+        reposTaskCategories.deleteById(id);
+    }
+
 }

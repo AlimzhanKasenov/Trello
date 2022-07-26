@@ -33,12 +33,12 @@ public class ServicFoldersImp implements ServicFolders {
     ServicTaskCategories servicTaskCategories;
 
     @Override
-    public List<Folders> getAllFolders(){
+    public List<Folders> getAllFolders() {
         return reposFolders.findAll();
     }
 
     @Override
-    public String addFolder(Folders folders){
+    public String addFolder(Folders folders) {
         reposFolders.save(folders);
         return null;
     }
@@ -47,9 +47,9 @@ public class ServicFoldersImp implements ServicFolders {
     public Folders addCategoryToFolder(Long folderId, Long categoryId) {
         Folders folder = reposFolders.findById(folderId).orElse(null);
         TaskCategories category = servicTaskCategories.getCategoryById(categoryId);
-        if(folder!=null && category!=null){
+        if (folder != null && category != null) {
             List<TaskCategories> categories = folder.getCategories();
-            if(categories==null){
+            if (categories == null) {
                 categories = new ArrayList<>();
             }
             categories.add(category);
@@ -67,7 +67,32 @@ public class ServicFoldersImp implements ServicFolders {
 
     @Override
     public Folders addNewFolder(Folders folder) {
-        if (folder!=null){ return reposFolders.save(folder);}
+        if (folder != null) {
+            return reposFolders.save(folder);
+        }
         return null;
+    }
+
+    @Override
+    public Folders deleteCategoryToFolder(Long folderId, Long categoryId) {
+        Folders folder = reposFolders.findById(folderId).orElse(null);
+        List<TaskCategories> list = folder.getCategories();
+        if (list != null) {
+            TaskCategories taskCategories = servicTaskCategories.getCategoryById(categoryId);
+            list.remove(taskCategories);
+            folder.setCategories(list);
+            int number = reposTaskCategories.checkIsCategoryExist(categoryId);
+            if(number==0){
+                servicTaskCategories.deleteById(categoryId);
+            }
+            return folder;
+        }
+        return null;
+    }
+
+    @Override
+    public Folders getFolder(Long id){
+        return reposFolders.getById(id);
+
     }
 }
